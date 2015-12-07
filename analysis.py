@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine , Integer , String , Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.mysql import BIGINT, DATETIME, TEXT, TINYINT, VARCHAR ,INTEGER , TIMESTAMP , ENUM
+from sqlalchemy.orm import sessionmaker
 
 engine=create_engine('mysql://root:Lordsvn_97@localhost/dummy')
 
@@ -69,3 +70,9 @@ class form_elementdesc(Base):
     form_elementisrequired=Column(TINYINT(1) , nullable=False , default=0)
     form_elementrank=Column(INTEGER(11) , nullable=False , default=0)
 
+Session = sessionmaker()
+Session.configure(bind=engine)
+my_session = Session()
+query_chck = my_session.query(form_elementdata).where(page_modulecomponentid=0).all()
+print len(query_chck)
+#print str(query_chck)
