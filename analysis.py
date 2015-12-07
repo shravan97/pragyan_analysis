@@ -35,15 +35,37 @@ class pragyanV3_pages(Base):
 	page_menudepth=Column(INTEGER(11) , nullable=False , default=1)
 	page_openinnewtab=Column(TINYINT(1) , nullable=False , default=0)
 
-class form_elementdata(object):
+class form_elementdata(Base):
 	"""for table form_elementdata"""
 	__tablename__='form_elementdata'
 	__table_args__ = {  
         'mysql_engine': 'InnoDB',  
         'mysql_charset': 'utf8'  
-    }
-    user_id=Column(INTEGER(11) , nullable=False , default=0 , primary_key=True)
-    page_modulecomponentid=Column(INTEGER(11) , nullable=False , default=0)
-    form_elementid=Column(INTEGER(11) , nullable=False , default=0)
-    form_elementdata=Column(TEXT , nullable=False , default=0)
+	}
+	user_id=Column(INTEGER(11) , nullable=False , primary_key=True , default=0)
+	page_modulecomponentid=Column(INTEGER(11) , nullable=False , default=0)
+	form_elementid=Column(INTEGER(11) , nullable=False , default=0)
+	form_elementdata=Column(TEXT , nullable=False , default=0)
     
+class form_elementdesc(Base):
+    """for table form_elementdesc"""
+    __tablename__='form_elementdesc'
+    __table_args__ = {  
+        'mysql_engine': 'InnoDB',  
+        'mysql_charset': 'utf8'  
+    }
+    page_modulecomponentid=Column(INTEGER(11) , nullable=False , primary_key=True , default=0)
+    form_elementid=Column(INTEGER(11) , nullable=False , default=0)
+    form_elementname=Column(VARCHAR(1000) , nullable=False)
+    form_elementdisplaytext=Column(VARCHAR(5000) , nullable=False)
+    form_elementtype=Column(ENUM('text','textarea','radio','checkbox','select','password','file','date','datetime','member') , nullable=False , default='text')
+    form_elementsize=Column(INTEGER(11))
+    form_elementtypeoptions=Column(TEXT)
+    form_elementdefaultvalue=Column(VARCHAR(4000))
+    form_elementmorethan=Column(VARCHAR(4000))
+    form_elementlessthan=Column(VARCHAR(4000))
+    form_elementcheckint=Column(TINYINT(1) , nullable=False , default=0)
+    form_elementtooltiptext=Column(TEXT , nullable=False)
+    form_elementisrequired=Column(TINYINT(1) , nullable=False , default=0)
+    form_elementrank=Column(INTEGER(11) , nullable=False , default=0)
+
