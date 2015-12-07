@@ -2,7 +2,7 @@ from sqlalchemy import create_engine , Integer , String , Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.mysql import BIGINT, DATETIME, TEXT, TINYINT, VARCHAR ,INTEGER , TIMESTAMP , ENUM
 
-engine=create_engine('mysql://root:***@localhost/dummy')
+engine=create_engine('mysql://root:Lordsvn_97@localhost/dummy')
 
 Base = declarative_base()
 
@@ -35,3 +35,15 @@ class pragyanV3_pages(Base):
 	page_menudepth=Column(INTEGER(11) , nullable=False , default=1)
 	page_openinnewtab=Column(TINYINT(1) , nullable=False , default=0)
 
+class form_elementdata(object):
+	"""for table form_elementdata"""
+	__tablename__='form_elementdata'
+	__table_args__ = {  
+        'mysql_engine': 'InnoDB',  
+        'mysql_charset': 'utf8'  
+    }
+    user_id=Column(INTEGER(11) , nullable=False , default=0 , primary_key=True)
+    page_modulecomponentid=Column(INTEGER(11) , nullable=False , default=0)
+    form_elementid=Column(INTEGER(11) , nullable=False , default=0)
+    form_elementdata=Column(TEXT , nullable=False , default=0)
+    
