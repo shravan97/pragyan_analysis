@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker , scoped_session
 import time , os
 
-engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
+engine = create_engine('mysql://<mysql_uname>:<mysql_pwd>@localhost/dummy')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -11,15 +11,31 @@ result = my_session.execute("SELECT `page_modulecomponentid` , `page_parentid` F
 
 for k in range(len(result)):
 	
-	result_form = my_session.execute("SELECT `form_elementid` , `form_elementname` FROM `form_elementdesc` WHERE `page_modulecomponentid`="+ str(result[k][1]) +";").fetchall()
-	#The above query is for registration page at pragyan site
+	#result_form = my_session.execute("SELECT `form_elementid` , `form_elementname` FROM `form_elementdesc` WHERE `page_modulecomponentid`="+ str(result[k][1]) +";").fetchall()
 	
-	print len(result_form)
-	time.sleep(5)
-	result_form_data = my_session.execute("SELECT `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`=0 AND `form_elementid`=9;").fetchall()
+	#print len(result_form)
+	#time.sleep(5)
+	#os.system('clear')
+	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
+	print res1[0][0],'\n'
+
+	#result_form_data = my_session.execute("SELECT `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`="+str(result[k][0])+";").fetchall()
 	#The above query gets the year of student . This has to be done for all form attributes
 	#0,1,4,6,9,10,13,
-	flag=0
+	res2 =my_session.execute("SELECT distinct(user_id) from form_elementdata where page_modulecomponentid ="+str(result[k][0])+" ;").fetchall() 
+	arr_users = [(int)(i[0]) for i in res2]
+
+	res3=my_session.execute("SELECT form_elementdata  from form_elementdata where page_modulecomponentid ="+str(result[k][0])+" and form_elementdata REGEXP '^-?[0-9]+$'  group by form_elementdata;").fetchall()
+	arr_team_members = [(int)(i[0]) for i in res3]
+
+	arr = arr_users + arr_team_members
+	arr=list(set(arr))
+
+	print len(arr),'\n'
+
+
+
+	""" flag=0
 	i=0
 	arr=[0,1,4,6,8,9,10]
 	
@@ -29,15 +45,15 @@ for k in range(len(result)):
 		for j in result_form_data :
 			print j[1] , " : " , j[0]
 		time.sleep(5) 
-	
+	"""
 #print result_form
 
 #query from line 14 , hence get page_parentid
 #consider page_modulecomponentid =1
-#select page_name from pragyanV3_pages where page_id=<the page_parentid from query on line 14>;
-#select form_elementname  , form_elementid  from form_elementdesc where page_modulecomponetid=1;
-#select count(user_id) , user_id from form_elementdata where page_modulecomponentid =1 ;<then get the array of user_id s>
-# select count(form_elementdata), form_elementdata  from form_elementdata where page_modulecomponentid =1 and form_elementdata REGEXP '[0-9]+' group by form_elementdata;
+#select page_name from pragyanV3_pages where page_id=<the page_parentid from query on line 9>;
+#select form_elementname  , form_elementid  from form_elementdesc where page_modulecomponentid=1;(not compulsory)
+#select distinct(user_id) from form_elementdata where page_modulecomponentid =1 ;<then get the array of user_id s>
+#select form_elementdata  from form_elementdata where page_modulecomponentid =1 and form_elementdata REGEXP '[0-9]+' group by form_elementdata;
 #from the above query get the array of form_elementdata .
 #merge the arrays and then execute arr = list(set(arr))
 
