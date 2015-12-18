@@ -14,8 +14,7 @@ for k in range(len(result)):
 	#result_form = my_session.execute("SELECT `form_elementid` , `form_elementname` FROM `form_elementdesc` WHERE `page_modulecomponentid`="+ str(result[k][1]) +";").fetchall()
 	
 	#print len(result_form)
-	#time.sleep(5)
-	#os.system('clear')
+	
 	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
 	print res1[0][0],'\n'
 
@@ -36,8 +35,6 @@ for k in range(len(result)):
 
 
 	""" flag=0
-	i=0
-	arr=[0,1,4,6,8,9,10]
 	
 	for i in arr :
 		result_form_data = my_session.execute("SELECT count(form_elementdata) , `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`=0 AND `form_elementid`="+str(i)+" GROUP BY form_elementdata;").fetchall()
