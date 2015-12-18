@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker , scoped_session
 import time , os
 
-engine = create_engine('mysql://<mysql_uname>:<mysql_pwd>@localhost/dummy')
+engine = create_engine('mysql://<mysql_uname>:<mysql_pwd>@localhost/databasename')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
