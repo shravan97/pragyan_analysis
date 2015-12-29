@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker , scoped_session
 import time , os
 
-engine = create_engine('mysql://<mysql_uname>:<mysql_pwd>@localhost/databasename')
+engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -30,7 +30,13 @@ for k in range(len(result)):
 	arr = arr_users + arr_team_members
 	arr=list(set(arr))
 
+	for r_num in arr:
+		res4=my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=8;").fetchall();
+		print res4[0][0]
+
 	print len(arr),'\n'
+	time.sleep(3)
+	os.system('clear')
 
 
 
