@@ -29,13 +29,29 @@ for k in range(len(result)):
 
 	arr = arr_users + arr_team_members
 	arr=list(set(arr))
+	lvl={}
 
 	for r_num in arr:
 		res4=my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=8;").fetchall();
-		print res4[0][0]
+		if res4:
+		  if res4[0][0] in lvl:
+		  	lvl[res4[0][0]]+=1
+		  else:
+		  	lvl[res4[0][0]]=1
+	
+	sum_vals=0  	
+	for x in lvl:
+		sum_vals+=lvl[x]
 
+	if sum_vals!=len(arr):
+		print "(",(len(arr)-sum_vals)," of their levels of study were not listed)",'\n'	
+
+
+
+
+	print lvl , '\n'		
 	print len(arr),'\n'
-	time.sleep(3)
+	time.sleep(7)
 	os.system('clear')
 
 
