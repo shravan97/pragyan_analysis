@@ -1,8 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker , scoped_session
 import time , os
+import getpass
 
-engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
+host = raw_input("Enter the host name : ")
+u_id = raw_input("Enter your mysql username : ")
+pwd = getpass.getpass()
+
+engine = create_engine('mysql://'+u_id+':'+pwd+'@'+host+'/dummy')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
