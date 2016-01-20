@@ -4,6 +4,7 @@
 OR  ``` $ sudo pip install sqlalchemy ```  
 * Then:  
 ``` $ git clone https://github.com/shravan97/pragyan_analysis ```  
+* Then change the mysql host , mysql username , mysql password on the 10th line of pragyan_analysis.py  
 * Then 'cd' into the repository and run :  
 ``` $ python pragyan_analysis.py ```  
 
