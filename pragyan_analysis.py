@@ -3,11 +3,11 @@ from sqlalchemy.orm import sessionmaker , scoped_session
 import time , os
 import getpass
 
-host = raw_input("Enter the host name : ")
-u_id = raw_input("Enter your mysql username : ")
-pwd = getpass.getpass()
+# host = raw_input("Enter the host name : ")
+# u_id = raw_input("Enter your mysql username : ")
+# pwd = getpass.getpass()
 
-engine = create_engine('mysql://'+u_id+':'+pwd+'@'+host+'/dummy')
+engine = create_engine('mysql://<your_mysql_uname>:<your_mysql_pwd>@<mysql_host>/<mysql_database_name>')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -35,26 +35,41 @@ for k in range(len(result)):
 	arr = arr_users + arr_team_members
 	arr=list(set(arr))
 	lvl={}
+	inst={}
 
 	for r_num in arr:
 		res4=my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=8;").fetchall();
+		res_institute = my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=6;").fetchall()
+
+		if res_institute:
+			if res_institute[0][0] in inst:
+				inst[res_institute[0][0]]+=1
+			else:
+				inst[res_institute[0][0]]=1	
+
 		if res4:
 		  if res4[0][0] in lvl:
 		  	lvl[res4[0][0]]+=1
 		  else:
 		  	lvl[res4[0][0]]=1
 	
-	sum_vals=0  	
+	sum_vals=0
+	sum_vals_1=0  	
 	for x in lvl:
 		sum_vals+=lvl[x]
+
+	for x in inst:
+		sum_vals_1+=inst[x]
+
 
 	if sum_vals!=len(arr):
 		print "(",(len(arr)-sum_vals)," of their levels of study were not listed)",'\n'	
 
+	if sum_vals_1!=len(arr):
+		print "(",(len(arr)-sum_vals_1) , " of their institutes were not listed " , '\n'
 
 
-
-	print lvl , '\n'		
+	print lvl , inst ,'\n'		
 	print len(arr),'\n'
 	time.sleep(7)
 	os.system('clear')
@@ -82,7 +97,5 @@ for k in range(len(result)):
 #merge the arrays and then execute arr = list(set(arr))
 
 """ ToDo : 
-
-Get input of mysql uname and pwd and name of host
 add queries
 """
