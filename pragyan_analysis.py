@@ -7,11 +7,16 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://<your_mysql_uname>:<your_mysql_pwd>@<mysql_host>/<mysql_database_name>')
+engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
 result = my_session.execute("SELECT `page_modulecomponentid` , `page_parentid` FROM `pragyanV3_pages` WHERE `page_name` LIKE 'registration' AND  `page_module` LIKE 'form';").fetchall()
+
+curr_dir = os.getcwd()
+
+f_degree = open(curr_dir + '/analysis1.txt' , 'w')
+f_institute = open(curr_dir + '/analysis2.txt' , 'w')
 
 
 for k in range(len(result)):
@@ -21,7 +26,7 @@ for k in range(len(result)):
 	#print len(result_form)
 	
 	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
-	print res1[0][0],'\n'
+	#print res1[0][0],'\n'
 
 	#result_form_data = my_session.execute("SELECT `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`="+str(result[k][0])+";").fetchall()
 	#The above query gets the year of student . This has to be done for all form attributes
@@ -62,17 +67,21 @@ for k in range(len(result)):
 		sum_vals_1+=inst[x]
 
 
-	if sum_vals!=len(arr):
-		print "(",(len(arr)-sum_vals)," of their levels of study were not listed)",'\n'	
+	# if sum_vals!=len(arr):
+	# 	print "(",(len(arr)-sum_vals)," of their levels of study were not listed)",'\n'	
 
-	if sum_vals_1!=len(arr):
-		print "(",(len(arr)-sum_vals_1) , " of their institutes were not listed " , '\n'
+	# if sum_vals_1!=len(arr):
+	# 	print "(",(len(arr)-sum_vals_1) , " of their institutes were not listed " , '\n'		
 
+	for k in lvl :
+		f_degree.write(k+"  :  " +str(lvl[k])+'\n\n')
 
-	print lvl , inst ,'\n'		
-	print len(arr),'\n'
-	time.sleep(7)
-	os.system('clear')
+	f_degree.write('\n\n\n\n')	
+
+	for k in inst :
+		f_institute.write(k+"  :  "+str(inst[k])+'\n\n')
+
+	f_institute.write('\n\n\n\n')
 
 
 
@@ -85,6 +94,8 @@ for k in range(len(result)):
 			print j[1] , " : " , j[0]
 		time.sleep(5) 
 	"""
+f_degree.close()
+f_institute.close()	
 #print result_form
 
 #query from line 14 , hence get page_parentid
