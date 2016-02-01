@@ -26,7 +26,7 @@ for k in range(len(result)):
 	#print len(result_form)
 	
 	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
-	#print res1[0][0],'\n'
+	f_degree.write(res1[0][0] +'\n\n')
 
 	#result_form_data = my_session.execute("SELECT `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`="+str(result[k][0])+";").fetchall()
 	#The above query gets the year of student . This has to be done for all form attributes
