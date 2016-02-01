@@ -7,7 +7,7 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
+engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<mysql_host>')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -75,12 +75,15 @@ for k in range(len(result)):
 		f_institute.write(k+"  :  "+str(inst[k])+'\n\n')
 
 
+	f_degree.write("Total  :  "+str(len(arr)) + '\n\n')
+	f_institute.write("Total  :  "+str(len(arr))+'\n\n')
 
 	if sum_vals!=len(arr):
 	 	f_degree.write("("+str(len(arr)-sum_vals)+" of their levels of study were not listed)"+'\n')
 
 	if sum_vals_1!=len(arr):
 	 	f_institute.write("("+str(len(arr)-sum_vals_1) + " of their institutes were not listed)" + '\n')
+
 
 	f_degree.write('\n\n\n\n')
 	f_institute.write('\n\n\n\n') 		
