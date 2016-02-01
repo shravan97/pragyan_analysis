@@ -7,6 +7,7 @@ OR  ``` $ sudo pip install sqlalchemy ```
 * Then change the mysql host , mysql username , mysql password on the 10th line of pragyan_analysis.py  
 * Then 'cd' into the repository and run :  
 ``` $ python pragyan_analysis.py ```  
+* Then , the text files 'analysis1.txt' and 'analysis2.txt' will contain all the required data  
 
 
 
