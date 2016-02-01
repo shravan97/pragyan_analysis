@@ -27,6 +27,7 @@ for k in range(len(result)):
 	
 	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
 	f_degree.write(res1[0][0] +'\n\n')
+	f_institute.write(res1[0][0] +'\n\n')
 
 	#result_form_data = my_session.execute("SELECT `form_elementdata` FROM `form_elementdata` WHERE `page_modulecomponentid`="+str(result[k][0])+";").fetchall()
 	#The above query gets the year of student . This has to be done for all form attributes
@@ -47,15 +48,15 @@ for k in range(len(result)):
 		res_institute = my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=6;").fetchall()
 
 		if res_institute:
-			if res_institute[0][0] in inst:
+			if res_institute[0][0] in inst and res_institute[0][0]!='':
 				inst[res_institute[0][0]]+=1
-			else:
+			elif res_institute[0][0]!='':
 				inst[res_institute[0][0]]=1	
 
 		if res4:
-		  if res4[0][0] in lvl:
+		  if res4[0][0] in lvl and res4[0][0]!='':
 		  	lvl[res4[0][0]]+=1
-		  else:
+		  elif res4[0][0]!='':
 		  	lvl[res4[0][0]]=1
 	
 	sum_vals=0
@@ -66,22 +67,23 @@ for k in range(len(result)):
 	for x in inst:
 		sum_vals_1+=inst[x]
 
-
-	# if sum_vals!=len(arr):
-	# 	print "(",(len(arr)-sum_vals)," of their levels of study were not listed)",'\n'	
-
-	# if sum_vals_1!=len(arr):
-	# 	print "(",(len(arr)-sum_vals_1) , " of their institutes were not listed " , '\n'		
-
 	for k in lvl :
 		f_degree.write(k+"  :  " +str(lvl[k])+'\n\n')
-
-	f_degree.write('\n\n\n\n')	
+	
 
 	for k in inst :
 		f_institute.write(k+"  :  "+str(inst[k])+'\n\n')
 
-	f_institute.write('\n\n\n\n')
+
+
+	if sum_vals!=len(arr):
+	 	f_degree.write("("+str(len(arr)-sum_vals)+" of their levels of study were not listed)"+'\n')
+
+	if sum_vals_1!=len(arr):
+	 	f_institute.write("("+str(len(arr)-sum_vals_1) + " of their institutes were not listed)" + '\n')
+
+	f_degree.write('\n\n\n\n')
+	f_institute.write('\n\n\n\n') 		
 
 
 
