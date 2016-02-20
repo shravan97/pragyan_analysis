@@ -7,7 +7,7 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<mysql_host>')
+engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<database_name>')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -79,10 +79,14 @@ for k in range(len(result)):
 	f_institute.write("Total  :  "+str(len(arr))+'\n\n')
 
 	if sum_vals!=len(arr):
-	 	f_degree.write("("+str(len(arr)-sum_vals)+" of their levels of study were not listed)"+'\n')
+	 	f_degree.write("("+str(len(arr)-sum_vals)+" of their levels of study were not listed)"+'\n\n')
 
 	if sum_vals_1!=len(arr):
-	 	f_institute.write("("+str(len(arr)-sum_vals_1) + " of their institutes were not listed)" + '\n')
+	 	f_institute.write("("+str(len(arr)-sum_vals_1) + " of their institutes were not listed)" + '\n\n')
+
+
+	f_degree.write('No. of teams registered :  '+str(len(arr_users)))
+	f_institute.write('No. of teams registered :  '+str(len(arr_users))) 	
 
 
 	f_degree.write('\n\n\n\n')
