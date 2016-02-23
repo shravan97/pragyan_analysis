@@ -7,7 +7,7 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<database_name>')
+engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -35,7 +35,7 @@ for k in range(len(result)):
 	res2 =my_session.execute("SELECT distinct(user_id) from form_elementdata where page_modulecomponentid ="+str(result[k][0])+" ;").fetchall() 
 	arr_users = [(int)(i[0]) for i in res2]
 
-	res3=my_session.execute("SELECT form_elementdata  from form_elementdata where page_modulecomponentid ="+str(result[k][0])+" and form_elementdata REGEXP '^-?[0-9]+$'  group by form_elementdata;").fetchall()
+	res3=my_session.execute("SELECT form_elementdata  from form_elementdata where page_modulecomponentid ="+str(result[k][0])+" and form_elementdata REGEXP '^-?[0-9]+$' and CHAR_LENGTH(form_elementdata)=6 group by form_elementdata;").fetchall()
 	arr_team_members = [(int)(i[0]) for i in res3]
 
 	arr = arr_users + arr_team_members
