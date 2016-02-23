@@ -7,7 +7,7 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://root:Lordsvn_97@localhost/dummy')
+engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<mysql_database>')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
