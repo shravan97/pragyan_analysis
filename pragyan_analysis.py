@@ -7,7 +7,7 @@ import getpass
 # u_id = raw_input("Enter your mysql username : ")
 # pwd = getpass.getpass()
 
-engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<mysql_database>')
+engine = create_engine('mysql://<mysql_username>:<mysql_password>@<mysql_host>/<database>')
 Session = scoped_session(sessionmaker(bind=engine))
 my_session = Session()
 
@@ -26,6 +26,9 @@ for k in range(len(result)):
 	#print len(result_form)
 	
 	res1 = my_session.execute("SELECT `page_name` from pragyanV3_pages where page_id="+str(result[k][1])+";").fetchall();
+	if str(result[k][1])=='25' or str(result[k][1])=='47':
+		continue
+
 	f_degree.write(res1[0][0] +'\n\n')
 	f_institute.write(res1[0][0] +'\n\n')
 
@@ -44,8 +47,8 @@ for k in range(len(result)):
 	inst={}
 
 	for r_num in arr:
-		res4=my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=8;").fetchall();
-		res_institute = my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=6;").fetchall()
+		res4=my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=7;").fetchall();
+		res_institute = my_session.execute("SELECT form_elementdata from form_elementdata where user_id="+str(r_num)+" and form_elementid=10;").fetchall()
 
 		if res_institute:
 			if res_institute[0][0] in inst and res_institute[0][0]!='':
